@@ -1,0 +1,77 @@
+// Post API'S
+
+
+###
+GET http://localhost:3000/posts 
+//Shows all posts
+
+###
+GET http://localhost:3000/posts?Sender=itzik
+//Shows all posts by Sender
+
+###
+GET http://localhost:3000/posts/6744d0aa205cfa5f8a9bca85
+//Shows post by specific id
+
+###
+POST http://localhost:3000/posts 
+Content-Type: application/json
+
+{
+"title": "mr 3",
+"Sender": "meni",
+"content": "this project worth 100"
+}
+// Create new post
+
+###
+PUT http://localhost:3000/posts/6744d0aa205cfa5f8a9bca87
+Content-Type: application/json
+
+{
+  "title": "Updated Title",
+  "content": "This is the updated content"
+}
+// Update post by id
+
+
+/////////////////////
+
+
+//Comment API'S
+
+###
+GET http://localhost:3000/comments
+//Shows all comments
+
+###
+GET http://localhost:3000/comments?postId=6744d0aa205cfa5f8a9bca85
+//Shows all comments by postId
+
+###
+GET http://localhost:3000/comments/6744d0f7205cfa5f8a9bca87
+//Shows comment by specific id
+
+###
+POST http://localhost:3000/comments 
+Content-Type: application/json
+
+{
+"postId": "6744d0f7205cfa5f8a9bca87",
+"User": "Dor",
+"content": "test2"
+}
+// Create new comment
+
+###
+PUT http://localhost:3000/comments/6744dd3941e8745b54c37e6d
+Content-Type: application/json
+
+{
+  "content": "This is the updated content"
+}
+// Update comment by id
+
+###
+DELETE http://localhost:3000/comments/6744dd3941e8745b54c37e6d
+// Delete comment by id

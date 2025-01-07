@@ -33,10 +33,9 @@ const router = express.Router();
  *           type: string
  *           description: The owner id of the post
  *       example:
- *         _id: 245234t234234r234r23f4
  *         title: My First Post
  *         content: This is the content of my first post.
- *         author: 324vt23r4tr234t245tbv45by
+ *         Sender: roy
  */
 
 /**
@@ -201,7 +200,7 @@ router.post("/",authMiddleware,createPost);
 router.put("/:id",authMiddleware, updatePost);
 /**
  * @swagger
- * posts/{id}:
+ * /posts/{id}:
  *   delete:
  *     summary: Delete a post by ID
  *     description: Delete a single post by its ID

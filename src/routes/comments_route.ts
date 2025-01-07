@@ -89,22 +89,35 @@ router.get("/commentid/:id", getCommentById);
  * /comments:
  *   post:
  *     summary: Create a new comment
- *     tags: [Comments]
+ *     tags: 
+ *       - Comments
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Comment'
- *     responses:
+ *             type: object
+ *             properties:
+ *               postId:
+ *                 type: string
+ *                 description: The ID of the post
+ *               sender:
+ *                 type: string
+ *                 description: The sender of the comment
+ *               content:
+ *                 type: string
+ *                 description: The content of the comment
+ *             required:
+ *               - postId
+ *               - sender
+ *               - content
+ *       responses:
  *       201:
  *         description: Comment created successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Comment'
  *       400:
- *         description: Bad request
+ *         description: Invalid input
  *       500:
  *         description: Server error
  */
@@ -114,7 +127,10 @@ router.post("/",authMiddleware, createComment);
  * /comments/{id}:
  *   put:
  *     summary: Update a comment by ID
- *     tags: [Comments]
+ *     tags: 
+ *       - Comments
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -127,16 +143,26 @@ router.post("/",authMiddleware, createComment);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Comment'
+ *             type: object
+ *             properties:
+ *               postId:
+ *                 type: string
+ *                 description: The ID of the post
+ *               sender:
+ *                 type: string
+ *                 description: The sender of the comment
+ *               content:
+ *                 type: string
+ *                 description: The content of the comment
+ *             required:
+ *               - postId
+ *               - sender
+ *               - content
  *     responses:
  *       200:
  *         description: Comment updated successfully
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Comment'
  *       400:
- *         description: Bad request
+ *         description: Invalid input
  *       404:
  *         description: Comment not found
  *       500:
@@ -148,7 +174,10 @@ router.put("/:id",authMiddleware, updateComment);
  * /comments/{id}:
  *   delete:
  *     summary: Delete a comment by ID
- *     tags: [Comments]
+ *     tags: 
+ *       - Comments
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

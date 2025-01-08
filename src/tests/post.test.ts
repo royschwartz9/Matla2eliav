@@ -123,4 +123,21 @@ describe("Posts Tests", () => {
     });
     expect(response.statusCode).toBe(400);
   });
+  // update post fail
+  test("Test Update Post fail", async () => {
+    const response = await request(app).put(`/posts/${postId}`)
+    .set({ authorization: "JWT " + testUser.token })
+    .send({
+      title: "Updated Test Post",
+      content: "Updated Test Content",
+    });
+    expect(response.statusCode).toBe(404);
+  });
+  // delete post fail
+  test("Test Delete Post fail", async () => {
+    const response = await request(app)
+    .delete("/posts/" + postId)
+    .set({ authorization: "JWT " + testUser.token });
+    expect(response.statusCode).toBe(404);
+  });
 });

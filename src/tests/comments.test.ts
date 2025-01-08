@@ -105,4 +105,31 @@ describe("Comments Tests", () => {
     expect(response.statusCode).toBe(200);
     expect(response.body.message).toBe("Comment deleted successfully");
   });
+
+  test("Test Create Comment with null content", async () => {
+    const response = await request(app).post("/comments")
+    .set({ authorization: "JWT " + testUser.token })
+    .send({
+      postId,
+      content: null,
+      Sender: "TestOwner",
+    });
+    expect(response.statusCode).toBe(400);
+  });
+  // delete failed
+  test("Test Delete Comment with invalid ID", async () => {
+    const response = await request(app).delete(`/comments/123`)
+    .set({ authorization: "JWT " + testUser.token });
+    expect(response.statusCode).toBe(400);
+  });
+  // update failed
+  test("Test Update Comment with invalid ID", async () => {
+    const response = await request(app).put(`/comments/123`)
+    .set({ authorization: "JWT " + testUser.token })
+    .send({
+      content: "Updated Test Comment",
+      Sender: "UpdatedTestOwner",
+    });
+    expect(response.statusCode).toBe(400);
+  });
 });

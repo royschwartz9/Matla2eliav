@@ -4,13 +4,8 @@ import commentsModel from '../models/comments_model';
 const getAllComments = async (req: Request, res: Response): Promise<void> => {
   const filter = req.query.postId as string | undefined;
   try {
-    if (filter) {
-      const comments = await commentsModel.find({ postId: filter });
-      res.send(comments);
-    } else {
       const comments = await commentsModel.find();
       res.send(comments);
-    }
   } catch (error) {
     res.status(400).send((error as Error).message);
   }

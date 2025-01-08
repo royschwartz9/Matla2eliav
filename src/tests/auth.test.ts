@@ -171,5 +171,28 @@ describe("Auth Tests", () => {
     });
     expect(response.statusCode).not.toBe(201);
   });
+  
+  //test refresh token fail
+  test("Test refresh token fail", async () => {
+    const response = await request(app).post(baseUrl + "/refresh").send({
+      refreshToken: testUser.refreshToken + "sdf",
+    });
+    expect(response.statusCode).not.toBe(200);
+  });
+
+  test("should reject if refreshToken is not provided", async () => {
+    const response = await request(app).post(baseUrl + "/refresh").send({});
+    expect(response.statusCode).toBe(400); // Assuming 400 for bad request
+    expect(response.text).toBe("fail");
+  });
+
+  
+  test("should reject if refreshToken is not valid", async () => {
+    const response = await request(app).post(baseUrl + "/refresh").send({
+      refreshToken: "invalid  token",
+  });
+    expect(response.statusCode).toBe(400); // Assuming 400 for bad request
+    expect(response.text).toBe("fail");
+  });
 
 });

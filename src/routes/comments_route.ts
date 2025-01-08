@@ -12,6 +12,34 @@ const router = express.Router();
 */
 /**
  * @swagger
+ * components:
+ *   schemas:
+ *     Comment:
+ *       type: object
+ *       required:
+ *         - postId
+ *         - content
+ *         - Sender
+ *       properties:
+ *         _id:
+ *           type: string
+ *           description: The auto-generated id of the comment
+ *         postId:
+ *           type: string
+ *           description: The ID of the post
+ *         content:
+ *           type: string
+ *           description: The content of the comment
+ *         Sender:
+ *           type: string
+ *           description: The Sender of the comment
+ *       example:
+ *         postId: 60f790f3b3b3b40015f1b1b1
+ *         content: This is the content of my first comment.
+ *         Sender: roy
+ */
+/**
+ * @swagger
  * /comments:
  *   get:
  *     summary: Get all comments
@@ -32,10 +60,11 @@ const router = express.Router();
 router.get("/", getAllComments);
 /**
  * @swagger
- * /comments/post/{postId}:
+ * /comments/{postId}:
  *   get:
  *     summary: Get comments by post ID
- *     tags: [Comments]
+ *     tags: 
+ *       - Comments
  *     parameters:
  *       - in: path
  *         name: postId
@@ -45,7 +74,7 @@ router.get("/", getAllComments);
  *         description: The ID of the post
  *     responses:
  *       200:
- *         description: List of comments by post ID
+ *         description: A list of comments
  *         content:
  *           application/json:
  *             schema:
@@ -60,10 +89,11 @@ router.get("/", getAllComments);
 router.get("/:id", getCommentbypostId);
 /**
  * @swagger
- * /comments/{id}:
+ * /comments/commentid/{id}:
  *   get:
  *     summary: Get a comment by ID
- *     tags: [Comments]
+ *     tags: 
+ *       - Comments
  *     parameters:
  *       - in: path
  *         name: id
@@ -103,19 +133,36 @@ router.get("/commentid/:id", getCommentById);
  *               postId:
  *                 type: string
  *                 description: The ID of the post
- *               sender:
- *                 type: string
- *                 description: The sender of the comment
  *               content:
  *                 type: string
  *                 description: The content of the comment
+ *               Sender:
+ *                 type: string
+ *                 description: The Sender of the comment
  *             required:
  *               - postId
- *               - sender
  *               - content
- *       responses:
+ *               - Sender
+ *     responses:
  *       201:
  *         description: Comment created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The ID of the comment
+ *                 postId:
+ *                   type: string
+ *                   description: The ID of the post
+ *                 sender:
+ *                   type: string
+ *                   description: The sender of the comment
+ *                 content:
+ *                   type: string
+ *                   description: The content of the comment
  *       400:
  *         description: Invalid input
  *       500:
@@ -145,9 +192,6 @@ router.post("/",authMiddleware, createComment);
  *           schema:
  *             type: object
  *             properties:
- *               postId:
- *                 type: string
- *                 description: The ID of the post
  *               sender:
  *                 type: string
  *                 description: The sender of the comment
@@ -155,9 +199,8 @@ router.post("/",authMiddleware, createComment);
  *                 type: string
  *                 description: The content of the comment
  *             required:
- *               - postId
- *               - sender
  *               - content
+ *               - Sender
  *     responses:
  *       200:
  *         description: Comment updated successfully

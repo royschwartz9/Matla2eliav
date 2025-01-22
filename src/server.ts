@@ -16,6 +16,8 @@ app.use("/posts", postsRoute);
 app.use("/comments", commentsRoute);
 app.use("/auth", authRoutes);
 
+
+//Swagger
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -31,10 +33,13 @@ const options = {
 const specs = swaggerJsDoc(options);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(specs));
 
+//Connecting to MongoDB
 const db = mongoose.connection;
 db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to database"));
 
+
+// app.listen
 const initApp = () => {
   return new Promise<Express>((resolve, reject) => {
     if (!process.env.DB_CONNECT) {

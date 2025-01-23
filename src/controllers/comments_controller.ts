@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import commentsModel from '../models/comments_model';
 
+//get all comments
 const getAllComments = async (req: Request, res: Response): Promise<void> => {
   const filter = req.query.postId as string | undefined;
   try {
@@ -11,6 +12,7 @@ const getAllComments = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//get comments by post id
 const getCommentbypostId = async (req: Request, res: Response): Promise<void> => {
   const postId = req.params.id;
   try {
@@ -25,6 +27,7 @@ const getCommentbypostId = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
+//get comment by specific id
 const getCommentById = async (req: Request, res: Response): Promise<void> => {
   const commentId = req.params.id;
   try {
@@ -39,6 +42,7 @@ const getCommentById = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//create a new comment
 const createComment = async (req: Request, res: Response): Promise<void> => {
   const commentBody = req.body;
   try {
@@ -50,6 +54,7 @@ const createComment = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//update a comment
 const updateComment = async (req: Request, res: Response): Promise<void> => {
   const commentId = req.params.id;
   const updateData = req.body;
@@ -65,6 +70,7 @@ const updateComment = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//delete a comment
 const deleteComment = async (req: Request, res: Response): Promise<void> => {
   const commentId = req.params.id;
   try {

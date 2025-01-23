@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import PostModel from '../models/posts_model';
 
+//get all posts
 const getAllPosts = async (req: Request, res: Response): Promise<void> => {
   const filter = req.query.Sender as string | undefined;
   try {
@@ -11,6 +12,7 @@ const getAllPosts = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//get post by id
 const getPostById = async (req: Request, res: Response): Promise<void> => {
   const postId = req.params.id;
   try {
@@ -25,6 +27,7 @@ const getPostById = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//get post by sender
 const getPostBySender = async (req: Request, res: Response): Promise<void> => {
   const Sender = req.params.Sender;
   try {
@@ -39,6 +42,7 @@ const getPostBySender = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//create a new post
 const createPost = async (req: Request, res: Response): Promise<void> => {
   const postBody = req.body;
   try {
@@ -50,6 +54,7 @@ const createPost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//update a post
 const updatePost = async (req: Request, res: Response): Promise<void> => {
   const postId = req.params.id;
   const updateData = req.body;
@@ -65,6 +70,7 @@ const updatePost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
+//delete a post
 const deletePost = async (req: Request, res: Response): Promise<void> => {
   const postId = req.params.id;
   try {

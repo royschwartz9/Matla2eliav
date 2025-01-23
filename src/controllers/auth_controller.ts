@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { Document } from 'mongoose';
 
+//register
 const register = async (req: Request, res: Response) => {
     try {
         const password = req.body.password;
@@ -23,7 +24,7 @@ type tTokens = {
     accessToken: string,
     refreshToken: string
 }
-
+//generate token
 const generateToken = (userId: string): tTokens | null => {
     if (!process.env.TOKEN_SECRET) {
         return null;
@@ -48,16 +49,17 @@ const generateToken = (userId: string): tTokens | null => {
         refreshToken: refreshToken
     };
 };
+//login
 const login = async (req: Request, res: Response) => {
     try {
         const user = await userModel.findOne({ email: req.body.email });
         if (!user) {
-            res.status(400).send('wrong username or password');
+            res.status(400).send('Username or password are wrong');
             return;
         }
         const validPassword = await bcrypt.compare(req.body.password, user.password);
         if (!validPassword) {
-            res.status(400).send('wrong username or password');
+            res.status(400).send('Username or password are wrong');
             return;
         }
         if (!process.env.TOKEN_SECRET) {
@@ -92,6 +94,7 @@ type tUser = Document<unknown, {}, IUser> & IUser & Required<{
 }> & {
     __v: number;
 }
+//verify refresh token
 const verifyRefreshToken = (refreshToken: string | undefined) => {
     return new Promise<tUser>((resolve, reject) => {
         //get refresh token from body
@@ -145,7 +148,7 @@ const logout = async (req: Request, res: Response) => {
         res.status(400).send("fail");
     }
 };
-
+//refresh token
 const refresh = async (req: Request, res: Response) => {
     try {
         const user = await verifyRefreshToken(req.body.refreshToken);
@@ -180,6 +183,7 @@ type Payload = {
     _id: string;
 };
 
+//middleware
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     const authorization = req.header('authorization');
     const token = authorization && authorization.split(' ')[1];
